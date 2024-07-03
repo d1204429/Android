@@ -26,20 +26,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void cfConversion (View view){
+    public void cfConversion(View view) {
         TextView conversion = (TextView) findViewById(R.id.conversion);
-        Button button = (Button) findViewById(R.id.button);
         EditText temperature = (EditText) findViewById(R.id.temperature);
-
         int c = Integer.parseInt(temperature.getText().toString());
-
-        int f = 9/5*c+32;
-
-        conversion.setText(f);
+        float f = (float) (9 / 5 * c + 32);
+        conversion.setText(String.valueOf(f));
 
     }
 
-    public void fcConversion (View view){
+    public void fcConversion(View view) {
+        TextView conversion = (TextView) findViewById(R.id.conversion);
+        EditText temperature = (EditText) findViewById(R.id.temperature);
+        int f = Integer.parseInt(temperature.getText().toString());
+        float c = (float) ((f - 32) * 5 / 9);
+        conversion.setText(String.valueOf(c));
 
     }
 }
