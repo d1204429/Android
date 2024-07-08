@@ -61,8 +61,14 @@ public class MainActivity extends AppCompatActivity {
         EditText input2= (EditText) findViewById(R.id.input2);
         double one = Double.parseDouble(input1.getText().toString());
         double two = Double.parseDouble(input2.getText().toString());
-        double temp = (double) (one/two);
-        result2.setText(String.valueOf(temp));
+
+        if(two !=0){double temp = (double) (one/two);
+            result2.setText(String.valueOf(temp));}
+        else {
+            result2.setText("第二欄不可為0");
+        }
+
+        //程式除0會有問題 要用if跳過
     }
 
 
