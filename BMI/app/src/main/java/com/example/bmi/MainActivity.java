@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         if(result.getData() != null && result.getResultCode() == MainActivity.RESULT_OK ){}
                     }
                 }
-        )
+        );
     }
 
     public void GotoBNICalculate(View view){
