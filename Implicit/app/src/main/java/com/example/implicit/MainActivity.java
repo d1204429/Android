@@ -1,6 +1,9 @@
 package com.example.implicit;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +25,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //開啟特定網頁
     public void  FcuIndexPage(View view){
-        
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_VIEW);
+        i.setData(Uri.parse("https://ilearn.fcu.edu.tw/"));
+        startActivity(i);
+    }
+
+    //開啟地圖 逢甲大學
+    public void GotoFCU(View view){
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse("geo:24.179759177151094, 120.64684343615289"));
+        startActivity(i);
     }
 }
