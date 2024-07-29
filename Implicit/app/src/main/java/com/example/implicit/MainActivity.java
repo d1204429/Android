@@ -33,10 +33,25 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    //開啟地圖 逢甲大學
+    //開啟地圖 逢甲大學 1.放經緯度座標 or 2.指定搜尋目標(紅色標記)0,0?q=逢甲大學
     public void GotoFCU(View view){
         Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse("geo:24.179759177151094, 120.64684343615289"));
+        i.setData(Uri.parse("geo:24.179328524661425, 120.64735842026356"));
         startActivity(i);
+    }
+
+    public void clickDIAL(View view){
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_DIAL);
+        startActivity(i);
+
+    }
+
+    public void clickCall(View view){
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_DIAL);
+        i.setData(Uri.parse("tel:+123456"));
+        startActivity(i);
+
     }
 }
