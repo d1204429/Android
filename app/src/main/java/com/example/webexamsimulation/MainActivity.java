@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 初始化 ListView 和待辦事項列表
-        listView = findViewById(R.id.listView);
+        listView = findViewById(R.id.todoListView);
         todoList = new ArrayList<>();
 
         // 檢查是否有待辦事項，如果沒有則添加佔位字串
