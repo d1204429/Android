@@ -1,9 +1,14 @@
 package com.example.webexamsimulation;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -43,4 +48,49 @@ public class TodoActivity extends AppCompatActivity {
             textInputLayout.getEditText().setText(content);
         }
     }
+
+    // 儲存按鈕點擊事件處理函式
+    public void saveButtonClick(View view){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        String titleText = "確定新增？";
+        String contentText = "確定內容並儲存？";
+
+        // 根據不同的操作設置不同的提示訊息
+        if(action.equals("edit")){
+            titleText = "確定修改？";
+            contentText = "確定修改的內容並儲存？";
+        }
+
+        dialog.setTitle(titleText);
+        dialog.setMessage(contentText);
+        dialog.setCancelable(true);
+        dialog.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // 獲取輸入的標題和內容
+                String title = ((EditText)findViewById(R.id.newTodoTitle)).getText().toString();
+                TextInputLayout textInputLayout = (TextInputLayout)findViewById(R.id.contentTextInputLayout);
+                String content = String.valueOf(textInputLayout.getEditText().getText());
+
+                Intent intent = new Intent();
+                intent.putExtra("TITLE", title);
+                intent.putExtra("CONTENT", content);
+
+                intent.putExtra("ACTION", action);
+                if(action.equals("edit")){
+                    intent.putExtra("INDEX", String.valueOf(index));
+                }
+
+                // 設置結果並結束活動
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        });
+
+        // 添加取消按鈕
+        dialog.setNeutralButton("取消", null);
+        dialog.show();
+    }
+
+
 }
