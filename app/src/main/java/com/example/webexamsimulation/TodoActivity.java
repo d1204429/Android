@@ -17,15 +17,17 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class TodoActivity extends AppCompatActivity {
-
-    String title,content,action;
+    String title, content, action;
     int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 啟用全螢幕的 EdgeToEdge
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_todo);
+
+        // 設定視圖的邊距，以適應系統欄位的插入
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -37,14 +39,14 @@ public class TodoActivity extends AppCompatActivity {
         action = bundle.getString("ACTION");
 
         // 如果動作是編輯，則將資料填入相應的輸入欄位
-        if(bundle != null && action.equals("edit")) {
+        if(bundle != null && action.equals("edit")){
             title = String.format(bundle.getString("TITLE"));
             content = String.format(bundle.getString("CONTENT"));
             index = bundle.getInt("INDEX");
 
             EditText tvTitle = (EditText) findViewById(R.id.newTodoTitle);
             tvTitle.setText(title);
-            TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.contentTextInputLayout);
+            TextInputLayout textInputLayout = (TextInputLayout)findViewById(R.id.contentTextInputLayout);
             textInputLayout.getEditText().setText(content);
         }
     }
@@ -112,5 +114,4 @@ public class TodoActivity extends AppCompatActivity {
         dialog.setNeutralButton("取消", null);
         dialog.show();
     }
-
 }

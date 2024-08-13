@@ -122,4 +122,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         intent.putExtras(bundle);
         intentActivityResultLanucher.launch(intent);
     }
+
+    //更新和顯示最新的待辦事項列表
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ListView todoListView = (ListView) findViewById(R.id.todoListView); // 獲取待辦事項列表視圖
+
+        if(todoArrayList.isEmpty()){ // 若待辦事項列表為空
+            Log.d("Test", "todoArrayList empty.");
+            ArrayList<String> empty = new ArrayList<String>();
+            empty.add("還沒有待辦事項，趕緊去新增！"); // 提示用戶新增待辦事項
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, empty);
+            todoListView.setAdapter(adapter);
+        } else { // 若有待辦事項，使用自定義適配器顯示
+            TodoAdapter adapter = new TodoAdapter(this, todoArrayList);
+            todoListView.setAdapter(adapter);
+            todoListView.setOnItemClickListener(this);
+        }
+    }
 }

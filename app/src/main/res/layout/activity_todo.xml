@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TodoAdapter">
+    tools:context=".TodoActivity">
 
     <LinearLayout
         android:layout_width="409dp"
@@ -65,6 +65,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contentTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -86,6 +87,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:onClick="saveButtonClick"
                     android:text="儲存" />
 
                 <Button
@@ -93,6 +95,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:onClick="giveUpButtonClick"
                     android:text="返回"
                     app:layout_constraintEnd_toEndOf="parent" />
             </LinearLayout>
