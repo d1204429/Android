@@ -92,5 +92,25 @@ public class TodoActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    // 放棄按鈕點擊事件處理函式
+    public void giveUpButtonClick(View view){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("確定放棄？");
+        dialog.setMessage("確定放棄並返回主頁面？");
+        dialog.setCancelable(true);
+
+        // 設置確定按鈕點擊事件
+        dialog.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // 結束活動並返回
+                finish();
+            }
+        });
+
+        // 添加取消按鈕
+        dialog.setNeutralButton("取消", null);
+        dialog.show();
+    }
 
 }
