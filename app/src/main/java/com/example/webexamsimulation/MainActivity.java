@@ -1,5 +1,6 @@
 package com.example.webexamsimulation;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -22,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     private ArrayList<Todo> todoArrayList = new ArrayList<Todo>();
-    private ActivityResultLauncher<Intent> intentActivityResultLauncher;
+    private ActivityResultLauncher<Intent> intentActivityResultLanucher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return windowInsetsCompat;
         });
+
+        intentActivityResultLanucher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult o) {
+                        if(o.getData() != null && o.getResultCode() == Activity.RESULT_OK){
+                            String action = o.getData().getStringExtra("ACTION");
+
+                            if(action.equals("new")){ // 新增待辦事項
+                                String newTitle = o.getData().getStringExtra("TITLE");
+                                String newContent = o.getData().getStringExtra("CONTENT");
+                                Todo newData = new Todo(newTitle, newContent);
+                                todoArrayList.add(newData);
+                            } else if (action.equals("edit")) { // 編輯待辦事項
+                                String index = o.getData().getStringExtra("INDEX");
+                                String newTitle = o.getData().getStringExtra("TITLE");
+                                String newContent = o.getData().getStringExtra("CONTENT");
+
+                                todoArrayList.get(Integer.parseInt(index)).setTitle(newTitle);
+                                todoArrayList.get(Integer.parseInt(index)).setContent(newContent);
+                            } else { // 刪除待辦事項
+                                int removeIndex = o.getData().getIntExtra("INDEX", 0);
+                                todoArrayList.remove(removeIndex);
+                            }
+                        }
+                    }
+                }
+        );
+
+
 
 
         //實作初始list文字
@@ -54,11 +89,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    //處理按鈕點擊事件
+    public void newButtonClick(View view){
+        Intent intent = new Intent(this, TodoActivity.class);
+        //使用buldle傳遞action
+        Bundle bundle = new Bundle();
+        bundle.putString("ACTION","new");
+        //利用intent攜帶bundle的資料
+        intent.putExtras(bundle);
+        intentActivityResultLanucher.launch(intent);
+    }
+
+
 
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Todo item = todoArrayList.get(i);
+        String title = item.getTitle();
+        String content = item.getContent();
 
+        Intent intent = new Intent(this, TodoActivity.class);
+        // 設定一個bundle來放資料
+        Bundle bundle = new Bundle();
+        bundle.putString("ACTION", "edit");
+        bundle.putString("TITLE", title);
+        bundle.putString("CONTENT", content);
+        bundle.putInt("INDEX", i);
+
+        // 利用intent攜帶bundle的資料
+        intent.putExtras(bundle);
+        intentActivityResultLanucher.launch(intent);
     }
 }
