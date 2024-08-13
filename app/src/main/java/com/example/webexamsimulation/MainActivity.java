@@ -2,6 +2,7 @@ package com.example.webexamsimulation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,7 +38,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
 
+        //實作初始list文字
+        ListView todoListView = (ListView) findViewById(R.id.todoListView);
+        if(todoArrayList.isEmpty()){
+            //在 logcat 中輸出一條調試信息，表明待辦事項列表是空的。這有助於在調試過程中確認列表的狀態。
+            Log.d("Test","todoArrayList empty.");
+            ArrayList<String> empty = new ArrayList<String>();
+            empty.add("還沒有待辦事項，趕緊去新增！");
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,empty);
+            todoListView.setAdapter(adapter);
+        }else {
+            TodoAdapter adapter = new TodoAdapter(this,todoArrayList);
+            todoListView.setAdapter(adapter);
+            todoListView.setOnItemClickListener(this);
+        }
     }
+
 
 
 
