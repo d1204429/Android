@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "webExamSimulation"
 include(":app")
+include(":app")
  
